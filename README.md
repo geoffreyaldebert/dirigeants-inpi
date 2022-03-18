@@ -1,4 +1,4 @@
-script permettant de récupérer les données des dirigeants de l'INPI
+# script permettant de récupérer les données des dirigeants des entreprises (données opendata provenant de l'INPI)
 
 Données récupérées sur data.cquest.org (qui proviennent du FTP de l'INPI).
 
@@ -34,3 +34,12 @@ TODO :
 - Process de mise à jour
 - Branchement au FTP INPI et plus data.cquest
 - intégration des données dans le workflow annuaire-entreprise pour ingestion des données dans notre base elasticsearch
+
+
+## Les liens (vraiment utiles)
+
+- [Données](https://data.cquest.org/inpi_rncs/imr/)
+- [Specs INPI](https://www.inpi.fr/sites/default/files/doc_tech_imr_novembre_2020_v1.5.2.pdf)
+- [Article Christian Quest](https://cq94.medium.com/le-rncs-en-quasi-opendata-57446c6fc8dd)
+- [Discussion Forum](https://teamopendata.org/t/quasi-opendata-ou-opendatafail-pour-le-rncs-diffuse-par-linpi/1603/9)
+- [Repo API entreprise, Lire le readme !!](https://github.com/etalab/rncs_worker_api_entreprise)

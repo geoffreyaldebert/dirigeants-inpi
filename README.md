@@ -1,4 +1,4 @@
-# script permettant de récupérer les données des dirigeants des entreprises (données opendata provenant de l'INPI)
+# Notebook de récupération des données des dirigeants d'entreprises (données opendata provenant de l'INPI)
 
 Données récupérées sur data.cquest.org (qui proviennent du FTP de l'INPI).
 

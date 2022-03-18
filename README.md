@@ -7,17 +7,19 @@ Les données sont réparties entre différents greffes. Pour gagner plus de perf
 Le process (sur des notebooks jupyter - inpi-processing.ipynb) :
 
 - récupération du stock initial du 4/5/2017
-  - ingestion des données dans une base sqlite. Deux tables : rep_pp (personnes physiques) et rep_pm (personnes physiques)
+  - ingestion des données dans une base sqlite. Deux tables : rep_pp (personnes physiques) et rep_pm (personnes morales)
 - pour chaque jour depuis le 5/5/2017 :
   - vérifier si un fichier stock existe, si oui:
     - pour tous les siren présent dans les fichiers, supprimer dans la base sqlite les données relatives à ces siren
-    - ajouter dans la base sqlite l'ensemble des représentants (en dispatchant selon PP ou PM dans la bonne table)
+    - ajouter dans la base sqlite l'ensemble des représentants (en dispatchant selon PP ou PM dans la bonne table) du fichier
   - vérifier si un fichier de flux rep existe, si oui:
-    - ajouter dans la base sqlite l'ensemble des représentants (en dispatchant selon PP ou PM dans la bonne table)
+    - ajouter dans la base sqlite l'ensemble des représentants (en dispatchant selon PP ou PM dans la bonne table) du fichier
   - vérifier si un fichier de flux rep modifie ou nouveau, si oui:
-    - ajouter dans la base sqlite l'ensemble des représentants (en dispatchant selon PP ou PM dans la bonne table)
+    - ajouter dans la base sqlite l'ensemble des représentants (en dispatchant selon PP ou PM dans la bonne table) du fichier
   - vérifier si un fichier de flux rep partant, si oui:
     - supprimer les dirigeants un à un en parcourant le fichier
+
+Le process prend environ 2h (mais est à ne faire qu'une fois)
 
 Il y a beaucoup de duplicats (notamment car beaucoup d'info entre les fichiers flux rep et flux rep nouveau modifie sont les mêmes). A ce stade, pas plus d'investigation réalisée. Cela peut se résoudre via de la déduplication a posteriori de l'insertion en base.
 Nous avons opté pour cette option car plus performante en temps (elle évite de checker ligne à ligne si un dirigeant est déjà présent). Ce n'est pas parfait néanmoins. A voir si cela peut être modifié.
@@ -25,12 +27,13 @@ Nous avons opté pour cette option car plus performante en temps (elle évite de
 pour générer les fichiers csv PP et PM :
 - export des tables sqlite vers un dataframe pandas
 - dédoublements de données rigoureusement les mêmes
-- groupement par siren, noms, prenoms pour les PP et siren, denomination pour les PM pour qu'un dirigeant ayant plusieurs qualite n'ait qu'une ligne (ex : patrick dupont, Administrateur ET Président ET Commissaire aux comptes)
+- groupement par `siren`, `rep_noms`, `rep_prenoms` pour les PP et `siren`, `rep_denomination` pour les PM pour qu'un dirigeant ayant plusieurs qualite n'ait qu'une ligne (ex : patrick dupont, Administrateur ET Président ET Commissaire aux comptes)
 - enregistrement csv
 
 Les données sont actuellement stockées sur https://files.data.gouv.fr/annuaire-entreprises/inpi-dirigeants/ et auront vocation à être intégrer dans le moteur de recherche de l'annuaire des entreprises.
 
-TODO :
+## TODO
+
 - Process de mise à jour
 - Branchement au FTP INPI et plus data.cquest
 - intégration des données dans le workflow annuaire-entreprise pour ingestion des données dans notre base elasticsearch
